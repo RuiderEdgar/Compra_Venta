@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"module": "CommonJS", //para definir que nuestro compilado luego pasará a js
-		"lib": ["DOM", "ES2015"], //match con el target
+		"lib": ["DOM", "ES2016"], //match con el target
 		"esModuleInterop": true, //para asegurarnos de darle soporte a nuestro js de acuerdo al ts compilado
 		"resolveJsonModule": true, //nos permite interpretar imporaciones de archivo ,json
 		"moduleResolution": "node", // permite verificar la inclusion de ts de forma explicita en node
