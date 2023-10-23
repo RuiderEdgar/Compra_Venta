@@ -1,17 +1,31 @@
 @baseUrl = http://localhost:5000
 @urlPath = api/v1
 
+//Sign in
 ###
 POST {{baseUrl}}/{{urlPath}}/signin
 Content-Type: application/json
 Accept: application/json
+Withcredentials: true
+Content-Length: 38
 
-{
-	"username": "sa",
-  "password": "ruider"
-}
+{"user":"edgarR","password":"ruider1"}
 
+//Get Ventas
+###
+GET {{baseUrl}}/{{urlPath}}/ventas
+Content-Type: application/json
+Accept: application/json
+Withcredentials: true
+Host: localhost:5000
+
+//Sign out
 ###
 GET {{baseUrl}}/{{urlPath}}/signout
 Content-Type: application/json
 Accept: application/json
+Withcredentials: true
+Host: localhost:5000
+
+
+
