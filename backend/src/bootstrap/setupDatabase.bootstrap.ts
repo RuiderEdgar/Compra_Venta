@@ -6,9 +6,10 @@ import { logger } from '@configs/configLogs';
 const log: Logger = logger.createLogger('setupDatabase');
 
 export class ConecctionDB {
-	private Compra_VentaDB: Sequelize;
+	public static Compra_VentaDB: Sequelize;
+
 	constructor(user: string, password: string) {
-		this.Compra_VentaDB = new Sequelize(config.NAME_DB!, user, password, {
+		ConecctionDB.Compra_VentaDB = new Sequelize(config.NAME_DB!, user, password, {
 			host: config.DATABASE_URL,
 			dialect: 'mssql',
 			dialectOptions: {
@@ -22,7 +23,7 @@ export class ConecctionDB {
 
 	public testingConnection = async (): Promise<void> => {
 		try {
-			await this.Compra_VentaDB.authenticate();
+			await ConecctionDB.Compra_VentaDB.authenticate();
 			log.info('Connection has been established successfully');
 		} catch (err) {
 			log.error('Error to connect to DB:', err);

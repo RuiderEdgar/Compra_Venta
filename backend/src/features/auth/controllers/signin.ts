@@ -5,7 +5,6 @@ import { ConecctionDB } from '@bootstrap/setupDatabase.bootstrap';
 import { joiValidation } from '@decorators/joi-validation.decorators';
 import { BadRequestError } from '@helpers/errors/badRequestError';
 import { config } from '@configs/configEnvs';
-import { IAuthUser } from '@auth/interfaces/authDocument';
 import { loginSchema } from '@auth/schemas/signin';
 
 export class SignIn {
@@ -25,6 +24,10 @@ export class SignIn {
 				config.JWT_TOKEN!
 			);
 			req.session = { jwt: userJWT };
+			req.session.user = {
+				username: user,
+				password: password
+			};
 			res.status(HTTP_STATUS.OK).json({ message: 'User login successfully', user: user, token: userJWT });
 		} catch (error) {
 			const errorMessage = 'Failed to authenticate with the database';

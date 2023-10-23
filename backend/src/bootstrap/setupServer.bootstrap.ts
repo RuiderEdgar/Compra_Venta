@@ -1,4 +1,5 @@
 import { Application, json, Request, Response, NextFunction, urlencoded } from 'express';
+import cookieSession from 'cookie-session';
 import compression from 'compression';
 import http from 'http';
 import HTTP_STATUS from 'http-status-codes';
@@ -19,10 +20,22 @@ export class Compra_VentaServer {
 	}
 
 	public start(): void {
+		this.securityMiddleware(this.app);
 		this.standardMiddleware(this.app);
 		this.routesMiddleware(this.app);
 		this.globalErrorHandler(this.app);
 		this.startServer(this.app);
+	}
+
+	private securityMiddleware(app: Application): void {
+		app.use(
+			cookieSession({
+				name: 'session',
+				keys: [config.SECRET_KEY_ONE!, config.SECRET_KEY_TWO!],
+				maxAge: 24 * 7 * 3600000, //24 dias
+				secure: config.NODE_ENV !== 'development'
+			})
+		);
 	}
 
 	private standardMiddleware(app: Application): void {
