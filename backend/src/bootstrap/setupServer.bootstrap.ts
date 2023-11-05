@@ -1,5 +1,6 @@
 import { Application, json, Request, Response, NextFunction, urlencoded } from 'express';
 import cookieSession from 'cookie-session';
+import cors from 'cors';
 import compression from 'compression';
 import http from 'http';
 import HTTP_STATUS from 'http-status-codes';
@@ -28,6 +29,13 @@ export class Compra_VentaServer {
 	}
 
 	private securityMiddleware(app: Application): void {
+		app.use(
+			cors({
+				origin: 'http://localhost:5173',
+				methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+				credentials: true // Para permitir cookies en solicitudes cruzadas
+			})
+		);
 		app.use(
 			cookieSession({
 				name: 'session',
