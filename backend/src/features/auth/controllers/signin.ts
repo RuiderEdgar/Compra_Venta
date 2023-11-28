@@ -30,8 +30,20 @@ export class SignIn {
 			};
 			res.status(HTTP_STATUS.OK).json({ message: 'User login successfully', user: user, token: userJWT });
 		} catch (error) {
+			// const errorMessage = 'Failed to authenticate with the database';
+			// throw new BadRequestError(errorMessage);
 			const errorMessage = 'Failed to authenticate with the database';
-			throw new BadRequestError(errorMessage);
+			console.error(errorMessage, error); // Loguea el error para referencia
+			if (error instanceof Error && 'code' in error) {
+				// Comprobación de tipo para acceder a 'code'
+				if (error.code === 'ELOGIN') {
+					res.status(HTTP_STATUS.UNAUTHORIZED).json({ error: 'Invalid username or password' });
+				} else {
+					res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: errorMessage });
+				}
+			} else {
+				res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: errorMessage });
+			}
 		}
 	}
 }
